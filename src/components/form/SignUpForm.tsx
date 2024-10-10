@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import GoogleSinInButton from "../GoogleSinInButton";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
    email: z.string().min(2, "Email is require").email(" invalid Email"),
@@ -31,7 +32,7 @@ const formSchema = z.object({
 })
 
 const SignUpForm = () => {
-
+  const { toast } = useToast()
 const router=useRouter()
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -58,7 +59,11 @@ router.push('/sign-in')
 
   }
   else{
-    console.error("Registration fail")
+    toast({
+      title: "Error",
+      description: "oops something went wrong",
+      variant:"destructive"
+    })
   }
   };
 
